@@ -1,0 +1,138 @@
+@import "tailwindcss" source(none);
+@source "../app";
+@source "../components";
+
+@theme inline {
+  --font-sans: var(--nf-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--nf-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-bungee: var(--nf-bungee), ui-sans-serif, system-ui, sans-serif;
+}
+
+@theme {
+  --color-ink: #0f0b17;
+  --color-panel: #1a1326;
+  --color-raised: #251b35;
+  --color-line: #3a2d52;
+  --color-bone: #f6f1ff;
+  --color-mist: #b3a6c9;
+  --color-grape: #9146ff;
+  --color-grape-text: #b48cff;
+  --color-lime: #c6ff3d;
+  --color-pink: #ff5fa2;
+  --color-cyan: #3ddcff;
+  --color-orange: #ffb23d;
+}
+
+body {
+  background-color: var(--color-ink);
+  background-image: radial-gradient(rgb(255 255 255 / 0.06) 1px, transparent 1px);
+  background-size: 22px 22px;
+  color: var(--color-bone);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-lime);
+  outline-offset: 3px;
+}
+
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    white-space: nowrap;
+    border-radius: 9999px;
+    border: 2px solid var(--color-ink);
+    padding: 0.65rem 1.35rem;
+    font-weight: 800;
+    box-shadow: 3px 3px 0 var(--color-bone);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .btn:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 5px 5px 0 var(--color-bone);
+  }
+  .btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--color-bone);
+  }
+  .btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+    transform: none;
+  }
+  .btn-sm {
+    padding: 0.35rem 0.9rem;
+    font-size: 0.875rem;
+  }
+  .btn-lime { background: var(--color-lime); color: var(--color-ink); }
+  .btn-grape { background: var(--color-grape); color: #fff; }
+  .btn-pink { background: var(--color-pink); color: var(--color-ink); }
+  .btn-bone { background: var(--color-bone); color: var(--color-ink); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-bone);
+    border-color: var(--color-line);
+    box-shadow: none;
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-bone);
+    box-shadow: none;
+  }
+
+  .ticket {
+    border-radius: 10px;
+    -webkit-mask:
+      radial-gradient(circle 12px at 0 50%, #0000 98%, #000) left / 51% 100% no-repeat,
+      radial-gradient(circle 12px at 100% 50%, #0000 98%, #000) right / 51% 100% no-repeat;
+    mask:
+      radial-gradient(circle 12px at 0 50%, #0000 98%, #000) left / 51% 100% no-repeat,
+      radial-gradient(circle 12px at 100% 50%, #0000 98%, #000) right / 51% 100% no-repeat;
+  }
+}
+
+.marquee { animation: marquee 50s linear infinite; }
+.spin-idle { animation: spin 90s linear infinite; }
+.pulse-ring { animation: ring 1.8s ease-out infinite; }
+.pop { display: inline-block; animation: pop 0.35s ease-out; }
+.stamp-in { animation: stamp-in 0.6s cubic-bezier(0.2, 1.4, 0.4, 1) both; }
+.dialog-pop[open] { animation: dialog-pop 0.2s cubic-bezier(0.2, 1.2, 0.4, 1); }
+
+@keyframes dialog-pop {
+  from { transform: scale(0.92) rotate(-1deg); opacity: 0; }
+}
+
+html[data-overlay] body { background: transparent; }
+html[data-overlay="green"] body { background: #00ff00; }
+.confetti {
+  position: absolute;
+  top: -24px;
+  border-radius: 2px;
+  animation: confetti-fall linear forwards;
+}
+
+@keyframes marquee { to { transform: translateX(-50%); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes ring {
+  from { box-shadow: 0 0 0 0 rgb(198 255 61 / 0.55); }
+  to { box-shadow: 0 0 0 18px rgb(198 255 61 / 0); }
+}
+@keyframes pop {
+  40% { transform: scale(1.35); }
+}
+@keyframes stamp-in {
+  0% { transform: scale(2.2) rotate(-8deg); opacity: 0; }
+  60% { transform: scale(0.95) rotate(2deg); opacity: 1; }
+  100% { transform: scale(1) rotate(-2deg); }
+}
+@keyframes confetti-fall {
+  to { transform: translate(var(--drift), 110vh) rotate(var(--spin)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
